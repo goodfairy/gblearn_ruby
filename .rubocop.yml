@@ -1,0 +1,20 @@
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+  
+Metrics/MethodLength:
+  Max: 30
+  
+# по дефолту коротковато
+Metrics/LineLength:
+  Max: 160
+  
+# а мне нравится паралельное присваивание
+Style/ParallelAssignment:
+  Enabled: false
+  
+# хочу комменты на русском 
+Style/AsciiComments:
+  Enabled: false
