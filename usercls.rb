@@ -51,7 +51,7 @@ class User
   def asknum_getcolor
     puts "Введите номер цвета от 1 до #{@color_accordance.size}"
     user_color = colors(STDIN.gets.chomp.to_i)
-    user_color.nil? ? 'Цвета с таким номером не существует' : user_color
+    user_color.nil? ? 'Цвета с таким номером не существует' : "Цвет: #{user_color}" 
   end
 
   ##
@@ -67,6 +67,6 @@ class User
   def askcolor_getnum
     puts 'Введите название цвета'
     user_color = colors_num(STDIN.gets.chomp.to_s.encode!(Encoding::UTF_8).downcase)
-    user_color.nil? ? 'У данного цвета нет номера (list - список цветов)' : user_color
+    user_color.nil? ? 'У данного цвета нет номера' : "Номер цвета: #{user_color}"
   end
 end
