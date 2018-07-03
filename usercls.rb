@@ -1,72 +1,93 @@
 class User
+  attr_reader :user_id
+  @@user_count =0 
   ##
   # initialize Customer by user data, or default data
   #
   # default data - 'Иван Иванов Иванович разнорабочий'
   # data option - user name, user surname, user midle name, user occupation
   #
-  def initialize(usr_name = 'Иван', usr_sname = 'Иванов', usr_mname = 'Иванович', usr_occupation = 'разнорабочий')
-    @usr_name, @usr_sname, @usr_mname, @usr_occupation = usr_name, usr_sname, usr_mname, usr_occupation
-    @color_accordance = { 1 => 'красный', 2 => 'оранжевый', 3 => 'желтый', 4 => 'зеленый', 5 => 'голубой', 6 => 'синий', 7 => 'фиолетовый' }
+  def initialize(usr_name = 'ask', user_rate = nil, usr_occupation = nil)
+    if usr_name =='ask' then
+      puts 'Введите Имя Фамилию Отчество пользователя через пробел'
+      usr_name = STDIN.gets.chomp.to_s.encode!(Encoding::UTF_8)
+    end
+    if user_rate =='ask' then
+      puts 'Введите оценку (0 - установить рандомно)'
+      user_rate = STDIN.gets.chomp.to_i
+    end
+    usr_name = usr_name.to_s.split
+    @usr_fio = { :name => usr_name[0] , :sname =>  usr_name[1], :mname =>  usr_name[2]}
+    set_rate(user_rate) if !user_rate.nil?
+    set_occupation(usr_occupation) if !usr_occupation.nil?
+    @@user_count += 1
+    @user_id = @@user_count
   end
-
+  
+  def set_occupation(usr_occupation)
+    @usr_occupation = usr_occupation
+  end
   ##
   # return user occupation ( example > разнорабочий )
   #
-  def profession
+  def get_occupation
     @usr_occupation
   end
+
 
   ##
   # Return user's name surname middle name  ( example > Иванов Иван Иванович )
   #
-  def fio
-    @usr_sname.to_s + ' ' + @usr_name.to_s + ' ' + @usr_mname.to_s
+  def get_fio
+    @usr_fio.values.join(' ')
+  end
+  
+  def set_rate(user_rate)
+    if (0..5).include?(user_rate) then
+      @user_rate = user_rate.zero? ? rand(1..5) : user_rate
+    end
+  end
+  
+  def get_rate
+    @user_rate
+  end
+  
+  def get_info(inf = '1100') #id, fio, rate, ocp
+    info = Array.new(0)
+    info.push("ID-#{@user_id}") if !inf[0].to_i.zero?
+    info.push("ФИО-#{@usr_fio.values.join(' ')}") if !inf[1].to_i.zero?
+    info.push("Rate-#{get_rate}") if !inf[2].to_i.zero?
+    info.push("Occupation-#{get_occupation}") if !inf[3].to_i.zero?
+    info.compact.join('  ').to_s
+  end
+end
+
+class Usergroup 
+
+  def initialize(group_name)
+    @group_name = group_name
+    @group_users = Array.new(0)
+  end
+  
+  def add_user(newuser)
+    @group_users.push(newuser)
+  end
+  
+  #def delete_user(deluser_id)
+  #  @del_item[0] = @group_users.find { | item | item.user_id == deluser_id }
+  #  @group_users - @del_item
+  #  @group_users.compact    
+  #end
+
+  def getbest_user
+    @group_users.max { | item_a, item_b | item_a.get_rate <=>  item_b.get_rate }
   end
 
-  ##
-  # Return color name with specified color number, if number is out date, return nil
-  #
-  def colors(color_num)
-    @color_accordance[color_num.to_i]
+  def getworst_user
+    @group_users.min { | item_a, item_b | item_a.get_rate <=>  item_b.get_rate }
   end
-
-  ##
-  # Return color number with specified color name, if name dos not exist, return nil
-  #
-  def colors_num(color_name)
-    @color_accordance.invert[color_name]
-  end
-
-  ##
-  # Return random color number
-  #
-  def getrandomcolor
-    Random.new.rand(1..@color_accordance.size)
-  end
-
-  ##
-  # Ask color number and return color name
-  #
-  def asknum_getcolor
-    puts "Введите номер цвета от 1 до #{@color_accordance.size}"
-    user_color = colors(STDIN.gets.chomp.to_i)
-    user_color.nil? ? 'Цвета с таким номером не существует' : "Цвет: #{user_color}" 
-  end
-
-  ##
-  # Show all colors name
-  #
-  def list_colors
-    puts @color_accordance.values.sort
-  end
-
-  ##
-  # Ask color name and return color number
-  #
-  def askcolor_getnum
-    puts 'Введите название цвета'
-    user_color = colors_num(STDIN.gets.chomp.to_s.encode!(Encoding::UTF_8).downcase)
-    user_color.nil? ? 'У данного цвета нет номера' : "Номер цвета: #{user_color}"
+  
+  def list_user(param = '1110')
+    @group_users.each { | item | puts item.get_info }
   end
 end
