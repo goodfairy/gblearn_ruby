@@ -1,8 +1,9 @@
 # require_relative 'hostcls.rb'
 # require_relative 'compcls.rb'
 # require_relative 'netwcls.rb'
+require_relative 'pintcls.rb'
+#require_relative 'clr_cls.rb'
 require_relative 'usercls.rb'
-require_relative 'clr_cls.rb'
 
 #clr = Color.new
 ## 2. Используя метод colors из предыдущего задания, создайте программу, генерирующую случайный цвет
@@ -17,23 +18,23 @@ require_relative 'clr_cls.rb'
 # 1. Создайте массив из 10 строк с именами пользователей
 # (Иванов, Петров, Сидоров, Алексеева, Казанцев, Антропов, Анисимова, Кузнецов, Соловьев, Кошкина).
 # Выведите список пользователей в консоль в алфавитном порядке.
-usr_array = %w[Иванов Петров Сидоров Алексеева Казанцев Антропов Анисимова Кузнецов Соловьев Кошкина]
-puts 'Созданный массив:'
-puts usr_array.sort
-puts
+#usr_array = %w[Иванов Петров Сидоров Алексеева Казанцев Антропов Анисимова Кузнецов Соловьев Кошкина]
+#puts 'Созданный массив:'
+#puts usr_array.sort
+#puts
 
 # 2. Создайте массив из 10 элементов со случайными числами от 0 до 99. Найдите максимальное и минимальное значение этого массива.
 #rnd_array =Array.new(10) { | val | val = rand(0...99) }
-puts "Максимальное значение рандомного массива - #{rnd_array.max}"
-puts "Минимальнаое значение рандомного массива - #{rnd_array.min}"
-puts
+#puts "Максимальное значение рандомного массива - #{rnd_array.max}"
+#puts "Минимальнаое значение рандомного массива - #{rnd_array.min}"
+#puts
 
 # 3. Создайте класс пользователя User, объекты которого сохраняют имя пользователя и его оценку.
 # Запросите в консоли при помощи метода gets имена и оценки для трех пользователей.
 # С использованием этих данных, создате массив, содержащий три объекта класса User.
 # Сразу сделал класс с массивом элементов User
 usrgroup = Usergroup.new('students')
-3.times{ usrgroup.add_user(User.new("ask", "ask" )) }
+#3.times{ usrgroup.add_user(User.new("ask", "ask" )) }
       
 # 4. Создайте класс пользователя User, объекты которого сохраняют имя пользователя и его оценку.
 # Создайте массив из объектов класса User, каждый из которых будет хранить разных пользователей и случайные оценки от 1 до 5.
@@ -43,6 +44,9 @@ new_users = ["Алексей Петров Владимирович","Петр И
 new_users.each { | item | usrgroup.add_user(User.new(item.to_s, 0))}
 
 # Если захочется всех посмотреть
-# usrgroup.list_user
+usrgroup.list_user
 # puts
-puts "Максимальная оценка у пользователя:  #{usrgroup.getbest_user.get_info('1110')}"
+puts "Максимальная оценка у пользователя:  #{usrgroup.getbest_user.get_info}"
+usrgroup.delete_user(2)
+usrgroup.list_user
+
