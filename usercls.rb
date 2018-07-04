@@ -30,19 +30,14 @@ class User
       puts 'Введите оценку от 0 до 5 (0- установить рандомно, N - позорно сбежать)'
       user_rate = STDIN.gets.delete(" \t\r\n")
       case
-      when (user_rate == '')
-        puts 'Нужно ченидь ввести, иначе никуда дальше не пойдем :('
-      when user_rate.casecmp('N').zero?
-        abort 'Хозин барин, програм терминейтед бай юзер войс'
-      when !(user_rate.to_i.to_s == user_rate.to_s || user_rate.to_f.to_s == user_rate.to_s)
-        puts 'Нужно ввести правильное значение, иначе никуда дальше не пойдем :('
-      when (user_rate.to_i.to_s == user_rate.to_s || user_rate.to_f.to_s == user_rate.to_s) && (0..5).cover?(user_rate.to_f.ceil)
-        nodata = false
-        puts 'ok. оценка принята'
-      else
-        puts 'Нужно ввести правильное значение, иначе никуда дальше не пойдем :('
+      when (user_rate == '') then puts 'Нужно ченидь ввести, иначе никуда дальше не пойдем :('
+      when user_rate.casecmp('N').zero? then abort 'Хозин барин, програм терминейтед бай юзер войс'
+      when !(user_rate.to_i.to_s == user_rate.to_s || user_rate.to_f.to_s == user_rate.to_s) then puts 'Нужно ввести правильное значение, иначе никуда дальше не пойдем :('
+      when (user_rate.to_i.to_s == user_rate.to_s || user_rate.to_f.to_s == user_rate.to_s) && (0..5).cover?(user_rate.to_f.ceil) then nodata = false
+      else puts 'Нужно ввести правильное значение, иначе никуда дальше не пойдем :('
       end
     end
+    puts 'ok. оценка принята'
     user_rate
   end
 
