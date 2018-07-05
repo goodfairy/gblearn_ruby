@@ -5,6 +5,6 @@ class Hello
   end
   
   def say
-    puts "Hello #{@hstr}!"
+    "Hello #{@hstr}!"
   end
 end

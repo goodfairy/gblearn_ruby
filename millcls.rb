@@ -21,14 +21,15 @@ class Product < Unitprod
 end
 
 class Mill < Product
-    @mill_count = { :bear => 0, :ball => 0, :cube => 0}
-  
-  def self.millcount(ptype, step)
-    @mill_count[ptype.to_sym] = @mill_count[ptype.to_sym] + step
-  end
-  
-  def self.stat(type = nil)
-    type.nil? ? @mill_count : ( type == 'sum' ? @mill_count.values.reduce(:+) : @mill_count[type.to_sym] )
+  @mill_count = { :bear => 0, :ball => 0, :cube => 0}
+  class << self
+    def millcount(ptype, step)
+      @mill_count[ptype.to_sym] = @mill_count[ptype.to_sym] + step
+    end
+    
+    def stat(type = nil)
+      type.nil? ? @mill_count : ( type == 'sum' ? @mill_count.values.reduce(:+) : @mill_count[type.to_sym] )
+    end
   end
   
   def initialize(mill_name)
