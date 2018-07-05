@@ -44,5 +44,3 @@ gets
 toy = Mill.new('uselesmill')
 toy.makeproduct('ball',5)
 puts toy.millstat
-
-abort
