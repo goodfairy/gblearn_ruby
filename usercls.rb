@@ -1,5 +1,5 @@
 class User
-  attr_reader :user_id333
+  attr_reader :user_id
   @user_count = 0
   def self.inccnt
     @user_count += 1
@@ -16,7 +16,7 @@ class User
       puts 'Введите Имя Фамилию Отчество пользователя через пробел'
       usr_name = STDIN.gets.chomp.to_s.encode!(Encoding::UTF_8)
     end
-    user_rate = (user_rate == 'ask') ? askrate : user_rate
+    user_rate = askrate if user_rate == 'ask'
     usr_name = usr_name.to_s.split
     @usr_fio = { name: usr_name[0], sname: usr_name[1], mname: usr_name[2] }
     rate(user_rate) unless user_rate.nil?
@@ -27,17 +27,12 @@ class User
   def askrate
     nodata = true
     while nodata
-      puts 'Введите оценку от 0 до 5 (0- установить рандомно, N - позорно сбежать)'
+      puts 'Введите оценку от 1 до 5 (N - позорно сбежать)'
       user_rate = STDIN.gets.delete(" \t\r\n")
-      case
-      when (user_rate == '') then puts 'Нужно ченидь ввести, иначе никуда дальше не пойдем :('
-      when user_rate.casecmp('N').zero? then abort 'Хозин барин, програм терминейтед бай юзер войс'
-      when !(user_rate.to_i.to_s == user_rate.to_s || user_rate.to_f.to_s == user_rate.to_s) then puts 'Нужно ввести правильное значение, иначе никуда дальше не пойдем :('
-      when (user_rate.to_i.to_s == user_rate.to_s || user_rate.to_f.to_s == user_rate.to_s) && (0..5).cover?(user_rate.to_f.ceil) then nodata = false
-      else puts 'Нужно ввести правильное значение, иначе никуда дальше не пойдем :('
-      end
+      abort 'Хозин барин, програм терминейтед бай юзер войс' if user_rate.casecmp('N').zero?
+      nodata = false if (1..5).cover?(user_rate.to_f.ceil)
     end
-    puts 'ok. оценка принята'
+    puts "ok. оценка #{user_rate} принята"
     user_rate
   end
 
@@ -54,7 +49,22 @@ class User
   def fio
     @usr_fio.values.join(' ')
   end
-
+  alias_method :full_name, :fio
+  alias_method :to_s, :fio
+  
+  ##
+  # return users name surname middle name as array or hash, default as array  ( example > Иванов Иван Иванович )
+  #
+  def fioarray(type = nil)
+    type.nil? ? @usr_fio.values : @usr_fio
+  end
+  
+  ##
+  # set and return user name or sname or mname  ( example for set> name('sname', 'Petrov' ) example for get> name('mname') )
+  #
+  def name(type, newval = nil)
+    @usr_fio[type.to_sym] = newval.nil? ? @usr_fio[type.to_sym] : newval
+  end
   ##
   # set and return user rate: example > set_rate(4)
   # if value user_rate is zero, user_rate sets random between from 1 to 5
@@ -81,9 +91,9 @@ class Usergroup
   # initialize Usergroup by user data
   # data option - group name
   #
-  def initialize(group_name)
+  def initialize(group_name, user_array = nil)
     @group_name = group_name
-    @group_users = []
+    @group_users = user_array.nil? ? [] : user_array
   end
 
   ##
@@ -128,3 +138,5 @@ class Usergroup
     @group_users.find { |item| item.user_id == user_id }
   end
 end
+
+Group = Usergroup
