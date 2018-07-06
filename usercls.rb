@@ -49,22 +49,23 @@ class User
   def fio
     @usr_fio.values.join(' ')
   end
-  alias_method :full_name, :fio
-  alias_method :to_s, :fio
-  
+  alias full_name fio
+  alias to_s fio
+
   ##
   # return users name surname middle name as array or hash, default as array  ( example > Иванов Иван Иванович )
   #
   def fioarray(type = nil)
     type.nil? ? @usr_fio.values : @usr_fio
   end
-  
+
   ##
   # set and return user name or sname or mname  ( example for set> name('sname', 'Petrov' ) example for get> name('mname') )
   #
   def name(type, newval = nil)
     @usr_fio[type.to_sym] = newval.nil? ? @usr_fio[type.to_sym] : newval
   end
+
   ##
   # set and return user rate: example > set_rate(4)
   # if value user_rate is zero, user_rate sets random between from 1 to 5
