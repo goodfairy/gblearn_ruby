@@ -79,11 +79,8 @@ class Settings < Bl_value
         raise "Undefined method #{method} for class Settings"
     end
     
-    def initialize(&block)
-        userproc = block
-        objval = Bl_value.new
-        yield(objval)
-        userproc.call(objval)
+    def initialize
+        yield(Bl_value.new)
     end
 end
 
