@@ -18,3 +18,4 @@ end
 class Admin < Moderator
   
 end
+
