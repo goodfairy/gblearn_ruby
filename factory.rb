@@ -1,5 +1,6 @@
 class Factory
-  def build(type) 
+  def build(type)
+    raise "Product of type #{type} not supported" if [:cube, :ball, :bear].index(type).nil? 
     dynamic_properties = { 'ptype' => type.to_s }
     class_instance = Object.const_set(type.to_s.capitalize, Class.new)
     class_instance.class_eval do
@@ -13,9 +14,3 @@ class Factory
     instance_eval(type.to_s.capitalize+".new")
   end
 end
-
-megafactory = Factory.new
-
-puts megafactory.build(:cube).class
-puts megafactory.build(:bear).class
-puts megafactory.build(:ball).class
