@@ -62,4 +62,5 @@ militarycargo.rocket, militarycargo.torpedo = true, false
 puts militarycargo.inspect
 
 # 5. *Реализуйте модуль Fivable, включение которого в класс будет разрешать создание только пяти объектов этого класса.
-# модуль подключен к классам с судами (vessel.rb), для проверки работы в классе Fivable надо задать MAX_INSTANCES значение 5, ну или какое вам больше нравится
+# модуль подключен к классам с судами (vessel.rb), для проверки работы в классе Fivable надо задать MAX_INSTANCES значение 5,
+# ну или какое вам больше нравится. Подключить к любому классу - require_relative 'limit.rb' и prepend Fivable в классе
