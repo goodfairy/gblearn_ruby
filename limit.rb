@@ -1,5 +1,5 @@
 module Fivable
-  MAX_INSTANCES  = 10
+  MAX_INSTANCES  = 5
   @instances_count = 0
   
   def self.inst_count
